@@ -18,11 +18,16 @@ public class Target : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Get RigidBody component
         targetRb = GetComponent<Rigidbody>();
+        // AddForce to object
         targetRb.AddForce(RandomForce(), ForceMode.Impulse);
+        // Add torque to object
         targetRb.AddTorque(RandomTorque(), RandomTorque(),
         RandomTorque(), ForceMode.Impulse);
+        // Set Random spawn location
         transform.position = RandomSpawnPos();
+        // Get Game Manager object
         gameManager=GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -33,6 +38,7 @@ public class Target : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        // If mouse clicks on object destory object, display particle and update score
         if (gameManager.isGameActive)
         {
             Destroy(gameObject);
@@ -43,6 +49,7 @@ public class Target : MonoBehaviour
 
     private void OnTriggerEnter()
     {
+        // If game object hits trigger destroy the object and end the game if the object tag is "Bad"
         Destroy(gameObject);
         if (!gameObject.CompareTag("Bad")) { gameManager.GameOver(); }
     }
